@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Python Keywords: Load More</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+
+<style>
+    nav {
+        text-align: center;
+    }
+    nav a {
+        margin: 0.2rem;
+        min-width: 1.2rem;
+        font-weight: bold;
+    }
+
+    nav a.current {
+        border-color: var(--bg);
+    }
+</style>
+
+<body>
+    <h1>Python Keywords: <br>Load More</h1>
+
+    <pre>False</pre>
+    <pre>None</pre>
+    <pre>True</pre>
+    <pre>and</pre>
+    <pre>as</pre>
+    <pre>assert</pre>
+    <pre>async</pre>
+    <pre>await</pre>
+    <pre>break</pre>
+    <pre>class</pre>
+    <pre>continue</pre>
+    <pre>def</pre>
+    <pre>del</pre>
+    <pre>elif</pre>
+    <pre>else</pre>
+    <pre>except</pre>
+    <pre>finally</pre>
+    <pre>for</pre>
+    <pre>from</pre>
+    <pre>global</pre>
+    <pre>if</pre>
+    <pre>import</pre>
+    <pre>in</pre>
+    <pre>is</pre>
+    <pre>lambda</pre>
+    <pre>nonlocal</pre>
+    <pre>not</pre>
+    <pre>or</pre>
+    <pre>pass</pre>
+    <pre>raise</pre>
+    <pre>return</pre>
+    <pre>try</pre>
+    <pre>while</pre>
+    <pre>with</pre>
+    <pre>yield</pre>
+        
+
+    <nav>
+        <a 
+            href="#/"
+            page="next"
+            onclick="loadMore()"
+            >
+            Load more
+        </a>
+    </nav>
+
+    <script>
+        const keywords = [...document.getElementsByTagName("pre")];
+        const paginateBy = 6;
+        let selectedPage = 0;
+
+        document.querySelectorAll('pre').forEach(function (el) {
+            el.style.display = 'none';
+        });
+
+        loadMore();
+
+        function loadMore(event) {
+            selectedPage += 1;
+            const indexMin = selectedPage * paginateBy;
+            const indexMax = indexMin + paginateBy;
+            const paginatedArray = keywords.filter(
+                (x, index) => index >= indexMin && index < indexMax
+            );
+            const currentPage = selectedPage + 1
+
+
+            paginatedArray.forEach(function (el) {
+                el.style.display = 'block';
+            })
+
+            if (keywords.length / currentPage <= paginateBy) {
+                document.querySelector("[page='next']").style.display = 'none'
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

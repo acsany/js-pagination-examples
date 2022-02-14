@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Python Keywords: Previous/Next</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+
+<style>
+    nav {
+        text-align: center;
+    }
+    nav a {
+        margin: 0.2rem;
+        min-width: 1.2rem;
+        font-weight: bold;
+    }
+
+    nav a.current {
+        border-color: var(--bg);
+    }
+</style>
+
+<body>
+    <h1>Python Keywords: <br>Previous/Next</h1>
+
+    <pre>False</pre>
+    <pre>None</pre>
+    <pre>True</pre>
+    <pre>and</pre>
+    <pre>as</pre>
+    <pre>assert</pre>
+    <pre>async</pre>
+    <pre>await</pre>
+    <pre>break</pre>
+    <pre>class</pre>
+    <pre>continue</pre>
+    <pre>def</pre>
+    <pre>del</pre>
+    <pre>elif</pre>
+    <pre>else</pre>
+    <pre>except</pre>
+    <pre>finally</pre>
+    <pre>for</pre>
+    <pre>from</pre>
+    <pre>global</pre>
+    <pre>if</pre>
+    <pre>import</pre>
+    <pre>in</pre>
+    <pre>is</pre>
+    <pre>lambda</pre>
+    <pre>nonlocal</pre>
+    <pre>not</pre>
+    <pre>or</pre>
+    <pre>pass</pre>
+    <pre>raise</pre>
+    <pre>return</pre>
+    <pre>try</pre>
+    <pre>while</pre>
+    <pre>with</pre>
+    <pre>yield</pre>
+
+    <p>
+        Current Page: <b page="current"></b>
+    </p>
+
+    <nav>
+        <a 
+            href="#/"
+            page="prev"
+            onclick="prevPage()"
+            >
+            Previous Page
+        </a>
+        <a 
+            href="#/"
+            page="next"
+            onclick="nextPage()"
+            >
+            Next Page
+        </a>
+    </nav>
+
+    <script>
+        const keywords = [...document.getElementsByTagName("pre")];
+        const paginateBy = 3;
+        let selectedPage = 0;
+
+        goToPage();
+
+        function nextPage() {
+            selectedPage += 1;
+            goToPage();
+        }
+
+        function prevPage() {
+            selectedPage -= 1;
+            goToPage();
+        }
+        
+        function goToPage() {
+            const indexMin = selectedPage * paginateBy;
+            const indexMax = indexMin + paginateBy;
+            const paginatedArray = keywords.filter(
+                (x, index) => index >= indexMin && index < indexMax
+            );
+            const currentPage = selectedPage + 1
+            document.querySelector("[page='current']").innerText = currentPage
+            console.log(paginatedArray)
+
+            document.querySelectorAll('pre').forEach(function (el) {
+                el.style.display = 'none';
+            });
+
+            paginatedArray.forEach(function (el) {
+                el.style.display = 'block';
+            })
+
+            if (selectedPage == 0) {
+                document.querySelector("[page='prev']").style.display = 'none'
+            } else {
+                document.querySelector("[page='prev']").style.display = 'inline-block'
+            }
+
+            if (keywords.length / currentPage <= paginateBy) {
+                document.querySelector("[page='next']").style.display = 'none'
+            } else {
+                document.querySelector("[page='next']").style.display = 'inline-block'
+            }
+
+        }
+
+    </script>
+</body>
+</html>
