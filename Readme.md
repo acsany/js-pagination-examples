@@ -5,7 +5,7 @@ This repository showcases some examples how to create a pagination experience wi
 
 ## Pagination Examples and Alternatives
 
-* [Previous/Next]("examples/previous_next.html")
-* [Load more]("examples/load_more.html")
-* [Infinite Scrolling]("examples/infinite_scrolling.html")
-* [Search]("examples/search.html")
+* [Previous/Next](examples/previous_next.html)
+* [Load more](examples/load_more.html)
+* [Infinite Scrolling](examples/infinite_scrolling.html)
+* [Search](examples/search.html)
