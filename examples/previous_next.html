@@ -82,29 +82,31 @@
     </nav>
 
     <script>
-        const keywords = [...document.getElementsByTagName("pre")];
-        const paginateBy = 3;
-        let selectedPage = 0;
+        const CONFIG = {
+            keywords: Array.from(document.getElementsByTagName("pre")),
+            paginateBy: 3,
+            selectedPage: 0
+        }
 
         goToPage();
 
         function nextPage() {
-            selectedPage += 1;
+            CONFIG.selectedPage += 1;
             goToPage();
         }
 
         function prevPage() {
-            selectedPage -= 1;
+            CONFIG.selectedPage -= 1;
             goToPage();
         }
         
         function goToPage() {
-            const indexMin = selectedPage * paginateBy;
-            const indexMax = indexMin + paginateBy;
-            const paginatedArray = keywords.filter(
+            const indexMin = CONFIG.selectedPage * CONFIG.paginateBy;
+            const indexMax = indexMin + CONFIG.paginateBy;
+            const paginatedArray = CONFIG.keywords.filter(
                 (x, index) => index >= indexMin && index < indexMax
             );
-            const currentPage = selectedPage + 1
+            const currentPage = CONFIG.selectedPage + 1
             document.querySelector("[page='current']").innerText = currentPage
             console.log(paginatedArray)
 
@@ -116,20 +118,18 @@
                 el.style.display = 'block';
             })
 
-            if (selectedPage == 0) {
+            if (CONFIG.selectedPage == 0) {
                 document.querySelector("[page='prev']").style.display = 'none'
             } else {
                 document.querySelector("[page='prev']").style.display = 'inline-block'
             }
 
-            if (keywords.length / currentPage <= paginateBy) {
+            if (CONFIG.keywords.length / currentPage <= paginateBy) {
                 document.querySelector("[page='next']").style.display = 'none'
             } else {
                 document.querySelector("[page='next']").style.display = 'inline-block'
             }
-
         }
-
     </script>
 </body>
 </html>

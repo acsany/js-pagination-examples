@@ -33,7 +33,7 @@
         <b data-count="results">0</b>
         of
         <b data-count="total"></b>
-        Keywords found<span> with the letters <mark>hello</mark></span>.
+        Keywords found<span> with the letters <mark></mark></span>.
     </p>
 
     <pre>False</pre>
@@ -73,41 +73,43 @@
     <pre>yield</pre>
 
     <script>
-        const keywords = document.querySelectorAll('pre');
-        const total = document.querySelector("[data-count='total']").innerText = keywords.length;
-        let results = 0
-        //get input
-        let input = document.querySelector("input");
+        const CONFIG = {
+            keywords: Array.from(document.getElementsByTagName("pre")),
+            results: 0,
+            input: document.querySelector("input")
+        }
+
+        document.querySelector("[data-count='total']").innerText = CONFIG.keywords.length
 
         // Hide keywords
-        keywords.forEach(function (el) {
+        CONFIG.keywords.forEach(function (el) {
                 el.style.display = 'none';
             });
 
         //function search on the list.
         function search() {
-            const inputVal = input.value.toLowerCase();
+            const inputVal = CONFIG.input.value.toLowerCase();
             if (inputVal.length > 0 ) {
-                keywords.forEach(function (el) {
+                CONFIG.keywords.forEach(function (el) {
                     el.style.display = 'block';
                 });
             } else {
-                keywords.forEach(function (el) {
+                CONFIG.keywords.forEach(function (el) {
                     el.style.display = 'none';
                 });
             }
 
             [...inputVal].forEach(function (char) {
                 console.log(char)
-                for (let i = 0; i < keywords.length; i += 1) {
-                    if (!keywords[i].innerText.toLowerCase().includes(char)) {
-                        keywords[i].style.display = "none";
+                for (let i = 0; i < CONFIG.keywords.length; i += 1) {
+                    if (!CONFIG.keywords[i].innerText.toLowerCase().includes(char)) {
+                        CONFIG.keywords[i].style.display = "none";
                     }
                 }
             });
 
             const results = document.querySelectorAll("pre[style='display: block;']");
-            document.querySelector("[data-count='results']").innerText = results.length;
+            document.querySelector("[data-count='results']").innerText = CONFIG.results.length;
 
             if (inputVal.length > 0) {
                 document.querySelector("span").style.display = "inline";
@@ -119,7 +121,7 @@
 
         document.querySelector("span").style.display = "none";
 
-        input.addEventListener('input', search);
+        CONFIG.input.addEventListener('input', search);
     </script>
 
 </body>

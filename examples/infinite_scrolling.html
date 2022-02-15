@@ -68,9 +68,11 @@
     <div id="loading">Loading...</div>
 
     <script>
-        const keywords = [...document.getElementsByTagName("pre")];
-        const paginateBy = 6;
-        let selectedPage = 0;
+        const CONFIG = {
+            keywords: Array.from(document.getElementsByTagName("pre")),
+            paginateBy: 6,
+            selectedPage: 0
+        }
 
         document.querySelectorAll('pre').forEach(function (el) {
             el.style.display = 'none';
@@ -79,13 +81,13 @@
         loadMore();
 
         function loadMore() {
-            selectedPage += 1;
-            const indexMin = selectedPage * paginateBy;
-            const indexMax = indexMin + paginateBy;
-            const paginatedArray = keywords.filter(
+            CONFIG.selectedPage += 1;
+            const indexMin = CONFIG.selectedPage * CONFIG.paginateBy;
+            const indexMax = indexMin + CONFIG.paginateBy;
+            const paginatedArray = CONFIG.keywords.filter(
                 (x, index) => index >= indexMin && index < indexMax
             );
-            const currentPage = selectedPage + 1
+            const currentPage = CONFIG.selectedPage + 1
 
 
             setTimeout(function () {
@@ -94,7 +96,7 @@
                 })
             }, 500);
 
-            if (keywords.length / currentPage <= paginateBy) {
+            if (CONFIG.keywords.length / currentPage <= CONFIG.paginateBy) {
                 loader.style.opacity = '0'
             }
 
