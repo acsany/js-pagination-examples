@@ -68,14 +68,12 @@
         <a 
             href="#/"
             page="prev"
-            onclick="prevPage()"
             >
             Previous Page
         </a>
         <a 
             href="#/"
             page="next"
-            onclick="nextPage()"
             >
             Next Page
         </a>
@@ -85,10 +83,10 @@
         const CONFIG = {
             keywords: Array.from(document.getElementsByTagName("pre")),
             paginateBy: 3,
-            selectedPage: 0
+            selectedPage: 0,
+            prev: document.querySelector("[page='prev']"),
+            next: document.querySelector("[page='next']")
         }
-
-        goToPage();
 
         function nextPage() {
             CONFIG.selectedPage += 1;
@@ -103,33 +101,30 @@
         function goToPage() {
             const indexMin = CONFIG.selectedPage * CONFIG.paginateBy;
             const indexMax = indexMin + CONFIG.paginateBy;
-            const paginatedArray = CONFIG.keywords.filter(
-                (x, index) => index >= indexMin && index < indexMax
-            );
+            const paginatedArray = CONFIG.keywords.filter((x, index) => {
+                return index >= indexMin && index < indexMax
+            });
             const currentPage = CONFIG.selectedPage + 1
             document.querySelector("[page='current']").innerText = currentPage
-            console.log(paginatedArray)
-
-            document.querySelectorAll('pre').forEach(function (el) {
-                el.style.display = 'none';
-            });
-
-            paginatedArray.forEach(function (el) {
-                el.style.display = 'block';
-            })
+            document.querySelectorAll('pre').forEach(el => el.style.display = 'none');
+            paginatedArray.forEach(el => el.style.display = 'block');
 
             if (CONFIG.selectedPage == 0) {
-                document.querySelector("[page='prev']").style.display = 'none'
+                CONFIG.prev.style.display = 'none'
             } else {
-                document.querySelector("[page='prev']").style.display = 'inline-block'
+                CONFIG.prev.style.display = 'inline-block'
             }
 
-            if (CONFIG.keywords.length / currentPage <= paginateBy) {
-                document.querySelector("[page='next']").style.display = 'none'
+            if (CONFIG.keywords.length / currentPage <= CONFIG.paginateBy) {
+                CONFIG.next.style.display = 'none'
             } else {
-                document.querySelector("[page='next']").style.display = 'inline-block'
+                CONFIG.next.style.display = 'inline-block'
             }
         }
+
+        CONFIG.prev.addEventListener('click', prevPage);
+        CONFIG.next.addEventListener('click', nextPage);
+        goToPage();
     </script>
 </body>
 </html>

@@ -71,45 +71,32 @@
         const CONFIG = {
             keywords: Array.from(document.getElementsByTagName("pre")),
             paginateBy: 6,
-            selectedPage: 0
+            selectedPage: 0,
+            loader: document.querySelector("#loading"),
+            options: {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.25
+            }
         }
-
-        document.querySelectorAll('pre').forEach(function (el) {
-            el.style.display = 'none';
-        });
-
-        loadMore();
 
         function loadMore() {
             CONFIG.selectedPage += 1;
             const indexMin = CONFIG.selectedPage * CONFIG.paginateBy;
             const indexMax = indexMin + CONFIG.paginateBy;
-            const paginatedArray = CONFIG.keywords.filter(
-                (x, index) => index >= indexMin && index < indexMax
-            );
             const currentPage = CONFIG.selectedPage + 1
+            const paginatedArray = CONFIG.keywords.filter((x, index) => {
+                return index >= indexMin && index < indexMax
+            });
 
-
-            setTimeout(function () {
-                paginatedArray.forEach(function (el) {
-                    el.style.display = 'block';
-                })
-            }, 500);
+            paginatedArray.forEach(el => el.style.display = 'block');
 
             if (CONFIG.keywords.length / currentPage <= CONFIG.paginateBy) {
-                loader.style.opacity = '0'
+                CONFIG.loader.style.opacity = '0'
             }
-
         }
-        const loader = document.querySelector("#loading");
 
         document.addEventListener("DOMContentLoaded", () => {
-            let options = {
-                root: null,
-                rootMargin: "0px",
-                threshold: 0.25
-            };
-
             function handleIntersect(entries, observer) {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
@@ -119,9 +106,12 @@
             }
 
             let observer = new IntersectionObserver(handleIntersect,
-                options);
-            observer.observe(loader);
+                CONFIG.options);
+            observer.observe(CONFIG.loader);
         })
+
+        document.querySelectorAll('pre').forEach(el => el.style.display = 'none');
+        loadMore();
 
     </script>
 

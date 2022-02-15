@@ -65,7 +65,6 @@
         <a 
             href="#/"
             page="next"
-            onclick="loadMore()"
             >
             Load more
         </a>
@@ -75,35 +74,33 @@
         const CONFIG = {
             keywords: Array.from(document.getElementsByTagName("pre")),
             paginateBy: 6,
-            selectedPage: 0
+            selectedPage: 0,
+            next: document.querySelector("[page='next']")
         }
 
         document.querySelectorAll('pre').forEach(function (el) {
             el.style.display = 'none';
         });
 
-        loadMore();
-
         function loadMore(event) {
             CONFIG.selectedPage += 1;
             const indexMin = CONFIG.selectedPage * CONFIG.paginateBy;
             const indexMax = indexMin + CONFIG.paginateBy;
+            const currentPage = CONFIG.selectedPage + 1
             const paginatedArray = CONFIG.keywords.filter(
                 (x, index) => index >= indexMin && index < indexMax
             );
-            const currentPage = CONFIG.selectedPage + 1
 
-
-            paginatedArray.forEach(function (el) {
-                el.style.display = 'block';
-            })
+            paginatedArray.forEach(el => el.style.display = 'block');
 
             if (CONFIG.keywords.length / currentPage <= CONFIG.paginateBy) {
-                document.querySelector("[page='next']").style.display = 'none'
+                CONFIG.next.style.display = 'none'
             }
 
         }
 
+        CONFIG.next.addEventListener('click', loadMore);
+        loadMore();
     </script>
 
 </body>
